@@ -29,7 +29,8 @@
   // performance: optional. Missing field falls back to false.
   "performance": {
     // preloadAllImages: optional. false means only preload current/next image.
-    "preloadAllImages": true
+    // true: 全量加载 8 张原图，约 1.16 GB 解码内存；仅在需要极致顺滑时开启。
+    "preloadAllImages": false
   },
 
   // demo: optional. Empty values fall back to built-in defaults.

@@ -835,7 +835,7 @@
     const transitionText = panelState.activeTransition
       ? `当前过渡：${panelState.activeTransition.fromName} → ${panelState.activeTransition.toName}（${panelState.activeTransition.rangeText}）\n混合进度：${Math.round(panelState.activeTransition.progress * 100)}%`
       : `当前过渡：无\n${nextTransitionText}`;
-    const preloadText = shouldPreloadAllImages() ? "全量（8张原图）" : "按需（当前/下一张）";
+    const preloadText = shouldPreloadAllImages() ? "全量（8张原图，约 1.16 GB 解码内存）" : "按需（当前/下一张）";
 
     const infoLines = [
       `当前时段：${panelState.currentName}（${panelState.currentRangeText}）`,

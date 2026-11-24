@@ -127,7 +127,7 @@ window[seg] = [boundary[seg] - windowWidth[seg], boundary[seg])
   },
 
   "performance": {
-    "preloadAllImages": true
+    "preloadAllImages": false
   }
 }
 ```
@@ -140,7 +140,7 @@ window[seg] = [boundary[seg] - windowWidth[seg], boundary[seg])
 | `timeline.segments.N.durationHours` | 内置 | 兼容字段，仅用于一致性提示；实际结束时间取下一段 `startHour` |
 | `demo.holdSeconds` | `1` | 演示模式非过渡区停留秒数 |
 | `demo.transitionSpeedMultiplier` | `300` | 演示模式过渡区加速倍率 |
-| `performance.preloadAllImages` | `false`（未设置时） | `true` 一次性加载 8 张原图；`false` 只预加载当前/下一张 |
+| `performance.preloadAllImages` | `false`（仓库默认） | `true` 一次性保留 8 张原图（约 1.16 GB 解码内存）；`false` 按需，最多 3 张 |
 
 配置非法或解析失败时，程序不会中断：控制台会输出警告，并回退到内置默认配置。
 
