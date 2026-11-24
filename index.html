@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Sunset Slideshow v3.2.5</title>
+  <link rel="stylesheet" href="./style.css?v=3.2.5.1" />
+</head>
+<body>
+  <main id="app" aria-label="动态背景播放器（16:9）">
+    <img id="imgA" class="bg" alt="背景图A" />
+    <img id="imgB" class="bg overlay" alt="背景图B" />
+    <div id="cinemaGrade" aria-hidden="true"></div>
+    <div id="lumaGrade" aria-hidden="true"></div>
+  </main>
+
+  <button id="settingsFab" class="settings-fab" type="button" aria-label="显示设置" aria-expanded="false" aria-controls="settingsPanel">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M19.14,12.94a7.48,7.48,0,0,0,.05-.94,7.48,7.48,0,0,0-.05-.94l2.11-1.65a.5.5,0,0,0,.12-.64l-2-3.46a.5.5,0,0,0-.6-.22l-2.49,1a7.28,7.28,0,0,0-1.63-.94l-.38-2.65A.5.5,0,0,0,13.78,2H10.22a.5.5,0,0,0-.49.42L9.35,5.07a7.28,7.28,0,0,0-1.63.94l-2.49-1a.5.5,0,0,0-.6.22l-2,3.46a.5.5,0,0,0,.12.64L4.86,11.06a7.48,7.48,0,0,0-.05.94,7.48,7.48,0,0,0,.05.94L2.75,14.59a.5.5,0,0,0-.12.64l2,3.46a.5.5,0,0,0,.6.22l2.49-1a7.28,7.28,0,0,0,1.63.94l.38,2.65a.5.5,0,0,0,.49.42h3.56a.5.5,0,0,0,.49-.42l.38-2.65a7.28,7.28,0,0,0,1.63-.94l2.49,1a.5.5,0,0,0,.6-.22l2-3.46a.5.5,0,0,0-.12-.64ZM12,15.5A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
+    </svg>
+  </button>
+
+  <aside id="settingsPanel" class="settings-panel hidden" aria-label="时间与播放设置">
+    <div class="settings-title">时间与动态设置</div>
+
+    <div class="setting-col">
+      <span class="setting-label">模式（单选）</span>
+      <label class="mode-row"><input type="radio" name="timeMode" value="system" checked /> 跟随系统时间</label>
+      <label class="mode-row"><input type="radio" name="timeMode" value="freeze" /> 时间定格</label>
+      <label class="mode-row"><input type="radio" name="timeMode" value="demo" /> 演示模式（非过渡停留 <b id="demoHoldHint">1</b>s，过渡区 <b id="demoSpeedHint">300</b>x）</label>
+      <label class="mode-row"><input type="radio" name="timeMode" value="custom" /> 自定义模式（使用下方滑块设置时间/倍率）</label>
+    </div>
+
+    <label class="setting-col">
+      <span class="setting-label">24小时当前时间：<b id="timeLabel">--:--</b></span>
+      <input id="timeSlider" type="range" min="0" max="1439" step="1" value="720" />
+    </label>
+
+    <label class="setting-col">
+      <span class="setting-label">时间加速倍率：<b id="speedLabel">1.0x</b></span>
+      <input id="speedSlider" type="range" min="1" max="800" step="1" value="1" />
+    </label>
+
+    <div class="setting-row geo-row">
+      <span id="geoStatus" class="geo-status">定位：正在初始化…</span>
+      <button id="geoLocateBtn" class="geo-btn" type="button">更新位置信息</button>
+    </div>
+
+    <div class="setting-col geo-manual-col">
+      <span class="setting-label">图片预加载</span>
+      <label class="mode-row"><input id="preloadToggle" type="checkbox" /> 是否全量加载图片（加载8张原图到内存）</label>
+    </div>
+
+    <div class="setting-col geo-manual-col">
+      <span class="setting-label">手动输入经纬度（留空则走 IP 粗定位）</span>
+      <div class="geo-inputs">
+        <input id="latInput" class="geo-input" type="text" inputmode="decimal" placeholder="纬度，例如 22.90" />
+        <input id="lonInput" class="geo-input" type="text" inputmode="decimal" placeholder="经度，例如 110.97" />
+      </div>
+      <div class="geo-actions">
+        <button id="saveGeoBtn" class="geo-btn" type="button">保存经纬度</button>
+        <button id="clearGeoBtn" class="geo-btn geo-btn-secondary" type="button">清空并粗定位</button>
+      </div>
+    </div>
+
+    <div id="settingsInfo" class="settings-info"></div>
+  </aside>
+
+  <script>window.__MODE__ = "final";</script>
+  <script src="./script.js?v=3.2.5.1"></script>
+</body>
+</html>

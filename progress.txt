@@ -1,0 +1,58 @@
+[Round 1]
+Task: T001
+Status: done
+Summary: 完成 v3.0-final 主功能开发：新增右下角 Apple 风格设置按钮与可折叠设置面板；新增 24h 时间滑条、时间加速倍率滑条、时间定格开关；重构时间线逻辑支持系统/手动/加速/冻结；优化色温与亮度关键帧并提升夜间亮度。
+Quality: node --check script.js passed
+Commit: bfb6755
+Next: 浏览器验收 + 提交 commit
+
+[Round 2]
+Task: T002
+Status: done
+Summary: v3.2完成：设置图标进一步缩小并降低不透明度；模式改为单选（系统/定格/演示）；演示模式按静止段4秒+窗口期120x后台控时；24小时滑条增加窗口期标志；毛玻璃细节优化。
+Quality: node --check script.js passed
+Commit: 200ffbb
+Next: 部署并验收
+
+[Round 3]
+Task: T003
+Status: done
+Summary: 修复v3.2反馈问题：设置按钮进一步缩小到12px并降低默认透明度到0.28；增加隐形点击热区提升点击成功率；提高设置按钮/面板z-index避免被提醒层遮挡；增加css/js版本参数防静态缓存导致样式不更新。
+Quality: node --check script.js passed
+Commit: 471b2a9
+Next: 用户验收
+
+[Round 4]
+Task: T004
+Status: done
+Summary: 修复演示模式窗口期一闪而过问题：重写demo相位机为 hold(4s) -> transition(120x) -> hold 循环，避免跳过窗口期；将tick频率提升到80ms提升过渡丝滑度；新增“自定义模式”单选项，仅在该模式下启用时间/倍率滑块拖动。
+Quality: node --check script.js passed
+Commit: 7150cdd
+Next: 用户验收
+
+[Round 5]
+Task: T005
+Status: done
+Summary: 按用户要求将右下角设置按钮放大一倍（12px -> 24px），图标同步放大并保持低存在感透明度；更新样式版本号避免缓存。
+Quality: 页面验证尺寸24x24，opacity=0.28
+Commit: aed38ad
+Next: 用户验收
+
+[Round 6]
+Task: T006
+Status: done
+Summary: v3.2.4完成：时间加速倍率上限提升到800x；演示模式静止时长由4秒改为2秒；新增定位状态提示与“获取本地位置”按钮；基于地理坐标重算日落和8段窗口期并在设置面板展示窗口期列表。
+Quality: node --check script.js passed; runtime verify speed max=800 and geo prompt shown
+Commit: af6c570
+Next: 用户验收
+[2026-03-17T15:36:27+08:00] task=T007 status=done
+summary: v3.2.4迭代：设置按钮采用safe-area+visualViewport底部避让，降低被Windows底栏遮挡风险；定位流程改为手动触发（按钮改名“更新位置信息”）且取消启动自动弹框；定位状态与已保存坐标同步展示；支持从 locationinfo.json 或 localStorage 读取位置信息；更新后会写入localStorage并提示保存 locationinfo.json（File Picker 或下载）用于下次启动默认加载。
+---
+[2026-03-17T15:37:51+08:00] task=T007 status=done
+summary: 完成：1) settings-fab/settings-panel 底部定位改为 safe-area + visualViewport 避让（JS 动态写入 --oc-bottom-avoid），降低 Windows 底栏遮挡；2) 取消启动自动定位弹框；按钮文案改为“更新位置信息”，仅点击时触发权限；3) 定位状态同步：启动优先读取 locationinfo.json，其次 localStorage；4) 更新后持久化：写 localStorage，并通过 File Picker 写入或下载生成 locationinfo.json 供下次启动默认加载。
+commit: 26da824
+---
+[2026-03-17T15:51:01+08:00] task=T008 status=done
+summary: 调整底部避让：基线按窗口高度9.5%预留Windows底栏，结合visualViewport动态delta取最大，进一步抬高设置按钮/面板；刷新启动优先读取 locationinfo.json/localStorage，并通过 Open-Meteo reverse geocoding 补全城市信息（city）后在状态栏显示“城市 + 经纬度”；定位权限仍只在点击“更新位置信息”时触发。
+commit: 7104cfb
+---

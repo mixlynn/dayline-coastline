@@ -1,0 +1,42 @@
+{
+  // version: config version, optional
+  "version": "1.1",
+
+  // location: optional. 默认不启用（手动保存的坐标优先）。
+  // 读取优先级：localStorage 手动保存 -> setting.json location（如自行添加）-> IP 粗定位 -> 内置默认坐标（岑溪市）。
+  // 如需固定坐标，取消下面一行的注释并填写：
+  // "location": { "lat": 22.9, "lon": 110.9667, "city": "岑溪市", "source": "manual" },
+
+  // timeline: optional. Invalid or missing fields fall back to built-in defaults.
+  "timeline": {
+    // transitionWindowMinutes: optional. If empty, fallback is 30.
+    // 窗口会按相邻时段的间隔自动收窄，避免多个过渡窗口重叠。
+    "transitionWindowMinutes": 30,
+    "segments": {
+      // startHour: 时间线的实际边界（必填，17.5 代表 17:30）。
+      // durationHours: 兼容字段，仅用于一致性提示；实际结束时间取下一段的 startHour。
+      "1": { "name": "夜晚/深夜", "startHour": 20.5, "durationHours": 8.5 },
+      "2": { "name": "晨曦", "startHour": 5, "durationHours": 1 },
+      "3": { "name": "早晨", "startHour": 6, "durationHours": 3 },
+      "4": { "name": "上午", "startHour": 9, "durationHours": 2.5 },
+      "5": { "name": "正午", "startHour": 11.5, "durationHours": 3 },
+      "6": { "name": "下午", "startHour": 14.5, "durationHours": 3 },
+      "7": { "name": "傍晚", "startHour": 17.5, "durationHours": 1 },
+      "8": { "name": "日暮", "startHour": 18.5, "durationHours": 2 }
+    }
+  },
+
+  // performance: optional. Missing field falls back to false.
+  "performance": {
+    // preloadAllImages: optional. false means only preload current/next image.
+    "preloadAllImages": true
+  },
+
+  // demo: optional. Empty values fall back to built-in defaults.
+  "demo": {
+    // transitionSpeedMultiplier: optional, fallback 300
+    "transitionSpeedMultiplier": 300,
+    // holdSeconds: optional, fallback 1
+    "holdSeconds": 1
+  }
+}
