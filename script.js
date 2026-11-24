@@ -122,6 +122,7 @@
   let lastPerf = performance.now();
   let demoHoldRemainMs = demoHoldMs;
   let demoPhase = "hold"; // hold | transition
+  let imgBReleaseTimer = null;
 
   let lastDateKey = dateKey(new Date());
   let lastTzOffset = new Date().getTimezoneOffset();
@@ -579,13 +580,23 @@
     });
   }
 
+  function prunePreloadedImages(keepSegments) {
+    for (const seg of Array.from(preloadedImages.keys())) {
+      if (!keepSegments.has(seg)) preloadedImages.delete(seg);
+    }
+  }
+
   function ensureUpcomingSegmentPreloaded(state) {
     if (shouldPreloadAllImages()) return;
     const currentSeg = state.currentSeg;
     const idx = SEGMENT_SEQUENCE.indexOf(currentSeg);
     if (idx < 0) return;
+    const nextSeg = SEGMENT_SEQUENCE[(idx + 1) % SEGMENT_SEQUENCE.length];
+    const keep = new Set([currentSeg, nextSeg]);
+    if (state.overlaySeg) keep.add(state.overlaySeg);
+    prunePreloadedImages(keep);
     preloadImageForSegment(currentSeg);
-    preloadImageForSegment(SEGMENT_SEQUENCE[(idx + 1) % SEGMENT_SEQUENCE.length]);
+    preloadImageForSegment(nextSeg);
     if (state.overlaySeg) preloadImageForSegment(state.overlaySeg);
   }
 
@@ -597,12 +608,25 @@
     imgA.style.opacity = "1";
 
     if (state.overlaySeg && state.alpha > 0.001) {
+      if (imgBReleaseTimer) {
+        clearTimeout(imgBReleaseTimer);
+        imgBReleaseTimer = null;
+      }
       const overlaySrc = toSrc(SEGMENT_FILES[state.overlaySeg]);
       if (!sameImage(imgB, overlaySrc)) imgB.src = overlaySrc;
       imgB.classList.add("active");
       imgB.style.opacity = state.alpha.toFixed(4);
     } else {
       imgB.style.opacity = "0";
+      if (!imgBReleaseTimer && imgB.getAttribute("src")) {
+        imgBReleaseTimer = setTimeout(() => {
+          imgBReleaseTimer = null;
+          if (!getBlendState(getModeNow()).overlaySeg) {
+            imgB.removeAttribute("src");
+            imgB.classList.remove("active");
+          }
+        }, 400);
+      }
     }
 
     applyCinematicGrade(now);
